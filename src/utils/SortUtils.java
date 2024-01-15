@@ -1,10 +1,13 @@
 package utils;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 public final class SortUtils {
 
-    public static void print(int[] arr){
+    public static void println(int[] arr, Consumer<Integer> consumer){
         for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
+            consumer.accept(arr[i]);
         }
     }
 
