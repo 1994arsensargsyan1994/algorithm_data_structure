@@ -4,17 +4,17 @@ public class GenericDynamicArray <T>{
     private Object [] storage;
     private int size;
     private static  final  int CAPACITY = 16;
-    public GenDynamic(T[] array){
+    public GenericDynamicArray(T[] array){
 
         this.storage = array;
     }
-   GenDynamic(T[] array,int size) {
+    GenericDynamicArray(T[] array,int size) {
         if (size > 0)
             this.storage = array;
             this.size = size;
     }
 
-    public GenDynamic() {
+    public GenericDynamicArray() {
         this.storage = new Object[CAPACITY];
     }
 
