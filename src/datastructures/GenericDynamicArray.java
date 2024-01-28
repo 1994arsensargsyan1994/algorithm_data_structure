@@ -9,9 +9,10 @@ public class GenericDynamicArray <T>{
         this.storage = array;
     }
     GenericDynamicArray(T[] array,int size) {
-        if (size > 0)
+        if (size > 0) {
             this.storage = array;
             this.size = size;
+        }
     }
 
     public GenericDynamicArray() {
