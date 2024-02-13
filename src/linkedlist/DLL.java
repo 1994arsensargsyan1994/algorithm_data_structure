@@ -1,6 +1,9 @@
 package linkedlist;
 
+import kotlin.Pair;
+
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class DLL {
 
@@ -10,19 +13,17 @@ public class DLL {
         DLL.pushFront(8);
         DLL.pushBack(96);
         DLL.pushFront(10);
+        DLL.pushFront(11);
+        DLL.pushFront(12);
         DLL.print();
         System.out.println();
-        System.out.println(DLL.popFront());
-        DLL.print();
-        System.out.println();
-        System.out.println(DLL.popBack());
-        DLL.print();
-        System.out.println();
-        DLL.add(10, 1);
-        DLL.print();
-        System.out.println();
-        DLL.remove(1);
-        DLL.print();
+        Node middleNode = DLL.getMiddleNode();
+        System.out.println(middleNode);
+        Pair<Node, Node> divide = DLL.divide();
+        System.out.println(divide);
+
+//        DLL.head.next.next = DLL.head;
+//        System.out.println(DLL.hasCycle());
     }
 
     private int size = 0;
@@ -127,6 +128,41 @@ public class DLL {
         }
     }
 
+    Node getMiddleNode() {
+        Node slow = head;
+        Node fast = head.next;
+        int count = 0;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            count++;
+        }
+        return slow;
+    }
+
+    Pair<Node, Node> divide() {
+        Node middleNode = getMiddleNode();
+        Node node2;
+        node2 = middleNode.next;
+        middleNode.next = null;
+        return new Pair<>(head, node2);
+    }
+
+    boolean hasCycle() {
+        Node slow = head;
+        Node fast = head;
+
+        while (slow.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow.equals(fast)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     static class Node {
         int value;
         Node next;
@@ -134,6 +170,19 @@ public class DLL {
 
         public Node(int value) {
             this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return value == node.value && Objects.equals(next, node.next) && Objects.equals(prev, node.prev);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(value, next, prev);
         }
 
         @Override

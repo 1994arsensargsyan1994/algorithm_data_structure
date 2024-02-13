@@ -1,8 +1,28 @@
 package linkedlist;
 
+import kotlin.Pair;
+
 import java.util.NoSuchElementException;
 
 public class SLL {
+
+    public static void main(String[] args) {
+        SLL sll = new SLL();
+        sll.pushFront(6);
+        sll.pushFront(4);
+        sll.pushFront(3);
+        sll.pushFront(1);
+
+        SLL sll2 = new SLL();
+        sll2.pushFront(9);
+        sll2.pushFront(7);
+        sll2.pushFront(5);
+        sll2.pushFront(1);
+        sll.print();
+        Node marge = sll.marge(sll.head, sll2.head);
+        System.out.println(marge);
+        sll.print();
+    }
 
     private int size;
     private Node head = null;
@@ -104,6 +124,37 @@ public class SLL {
         size += sll.size;
     }
 
+    Node getMiddleNode() {
+        Node slow = head;
+        Node fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    void reverse() {
+        Node prev = null;
+        Node cur = head;
+        while (cur != null) {
+            Node next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        head = prev;
+    }
+
+    Pair<Node, Node> divide() {
+        Node middleNode = getMiddleNode();
+        Node node2;
+        node2 = middleNode.next;
+        middleNode.next = null;
+        return new Pair<>(head, node2);
+    }
+
     public void remove(int index) {
         if (size < index) {
             throw new IllegalArgumentException("No such index");
@@ -120,6 +171,31 @@ public class SLL {
             cur.next = cur.next.next;
             size--;
         }
+    }
+
+    Node marge(Node head1, Node head2) {
+        Node dummy = new Node(-1);
+        while (head1 != null || head2 != null) {
+            if (head1 == null) {
+                dummy.next = head2;
+                break;
+            }
+
+            if (head2 == null) {
+                dummy.next = head1;
+                break;
+            }
+
+            if (head1.value <= head2.value) {
+                dummy.next = head1;
+                head1 = head1.next;
+            }else {
+                dummy.next = head2;
+                head2 = head2.next;
+            }
+            dummy = dummy.next;
+        }
+        return dummy.next;
     }
 
     public int getSize() {
