@@ -124,18 +124,18 @@ public class SLL {
         size += sll.size;
     }
 
-    Node getMiddleNode() {
+    Node getMiddleNode(Node head) {
         Node slow = head;
         Node fast = head.next;
-
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
+            size++;
         }
-        return slow;
+        return fast != null ? slow.next : slow;
     }
 
-    void reverse() {
+    Node reverse() {
         Node prev = null;
         Node cur = head;
         while (cur != null) {
@@ -145,10 +145,11 @@ public class SLL {
             cur = next;
         }
         head = prev;
+        return prev;
     }
 
     Pair<Node, Node> divide() {
-        Node middleNode = getMiddleNode();
+        Node middleNode = getMiddleNode(this.head);
         Node node2;
         node2 = middleNode.next;
         middleNode.next = null;
@@ -173,8 +174,17 @@ public class SLL {
         }
     }
 
+    Node insertionSortList() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public Node sortList(Node head) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     Node marge(Node head1, Node head2) {
         Node dummy = new Node(-1);
+        Node result = dummy;
         while (head1 != null || head2 != null) {
             if (head1 == null) {
                 dummy.next = head2;
@@ -189,13 +199,13 @@ public class SLL {
             if (head1.value <= head2.value) {
                 dummy.next = head1;
                 head1 = head1.next;
-            }else {
+            } else {
                 dummy.next = head2;
                 head2 = head2.next;
             }
             dummy = dummy.next;
         }
-        return dummy.next;
+        return result.next;
     }
 
     public int getSize() {
