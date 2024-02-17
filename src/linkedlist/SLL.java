@@ -3,6 +3,7 @@ package linkedlist;
 import kotlin.Pair;
 
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 public class SLL {
 
@@ -227,8 +228,30 @@ public class SLL {
         return current;
     }
 
+    public boolean isPalindrome(Node head) {
+        Stack<Integer> integers = new Stack<>();
+        Node cur = head;
+        while (cur != null) {
+            integers.push(cur.value);
+            cur = cur.next;
+        }
+        cur = head;
+        while (cur != null) {
+            if (integers.pop() != cur.value) {
+                return false;
+            }
+            cur = cur.next;
+        }
+        return true;
+    }
+
+    public void deleteGivenNode(Node node) {
+        node.value = node.next.value;
+        node.next = node.next.next;
+    }
+
     private static class Node {
-        private final int value;
+        private int value;
         private Node next;
 
         public Node(int value) {
