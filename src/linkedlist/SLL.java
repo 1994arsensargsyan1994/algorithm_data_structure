@@ -14,14 +14,7 @@ public class SLL {
         sll.pushFront(3);
         sll.pushFront(1);
 
-        SLL sll2 = new SLL();
-        sll2.pushFront(9);
-        sll2.pushFront(7);
-        sll2.pushFront(5);
-        sll2.pushFront(1);
-        sll.print();
-        Node marge = sll.marge(sll.head, sll2.head);
-        System.out.println(marge);
+        System.out.println(sll.partition(sll.head,3));
         sll.print();
     }
 
@@ -248,6 +241,30 @@ public class SLL {
     public void deleteGivenNode(Node node) {
         node.value = node.next.value;
         node.next = node.next.next;
+    }
+
+    public Node partition(Node head, int x) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        Node duumy1 = new Node(-1) ;
+        Node duumy2 = new Node(-1) ;
+        Node h1 = duumy1;
+        Node h2 = duumy2;
+        Node cur = head;
+        while(cur != null){
+            if(cur.value < x){
+                h1 = cur.next;
+                h1 = h1.next;
+            }else {
+                h2 = cur.next;
+                h2 = h2.next;
+            }
+            cur = cur.next;
+        }
+
+        h1.next = h2;
+        return duumy1.next;
     }
 
     private static class Node {
