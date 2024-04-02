@@ -22,13 +22,13 @@ public class BinaryTree {
 
     private void dfs(TreeNode node, List<Integer> integers, Order order) {
         if (node == null) return;
-        if (order.equals(Order.PRE)) integers.add(node.value);
-        dfs(node.left, integers, order);
+        if (order.equals(Order.PRE)) integers.add(node.getValue());
+        dfs(node.getLeft(), integers, order);
 
-        if (order.equals(Order.IN)) integers.add(node.value);
-        dfs(node.right, integers, order);
+        if (order.equals(Order.IN)) integers.add(node.getValue());
+        dfs(node.getRight(), integers, order);
 
-        if (order.equals(Order.POST)) integers.add(node.value);
+        if (order.equals(Order.POST)) integers.add(node.getValue());
 
     }
 
@@ -42,10 +42,10 @@ public class BinaryTree {
             node = new TreeNode(value);
             return node;
         }
-        if (value < node.value) {
-            node.left = insert(node.left, value);
+        if (value < node.getValue()) {
+            node.setLeft(insert(node.getLeft(), value));
         } else {
-            node.right = insert(node.right, value);
+            node.setRight(insert(node.getRight(), value));
         }
         return node;
     }
@@ -56,25 +56,25 @@ public class BinaryTree {
 
     private TreeNode delete(TreeNode node, int val) {
         if (node == null) return null;
-        if (node.value < val) {
-            node.right = delete(node.right, val);
+        if (node.getValue() < val) {
+            node.setRight(delete(node.getRight(), val));
         }
-        if (node.value > val) {
-            node.left = delete(node.left, val);
+        if (node.getValue() > val) {
+            node.setLeft(delete(node.getLeft(), val));
         } else {
-            if (node.left == null) {
-                return node.right;
-            } else if ((node.right == null)) {
-                return node.left;
+            if (node.getLeft() == null) {
+                return node.getRight();
+            } else if ((node.getRight() == null)) {
+                return node.getLeft();
             }
-            TreeNode suce = getMin(node.right);
-            node.value = suce.value;
-            node.right = delete(node.right, val);
+            TreeNode suce = getMin(node.getRight());
+            node.setValue(suce.getValue());
+            node.setRight(delete(node.getRight(), val));
         }
         return node;
     }
 
-    public List<List<Integer>> bfs(){
+    public List<List<Integer>> bfs() {
         if (this.root == null) return List.of();
         List<List<Integer>> result = new ArrayList<>();
 
@@ -87,9 +87,9 @@ public class BinaryTree {
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.peek();
                 queue.poll();
-                arr.add(node.value);
-                if (node.left != null) queue.add(node.left);
-                if (node.right != null) queue.add(node.right);
+                arr.add(node.getValue());
+                if (node.getLeft() != null) queue.add(node.getLeft());
+                if (node.getRight() != null) queue.add(node.getRight());
             }
             ++lavel;
             result.add(arr);
@@ -99,21 +99,25 @@ public class BinaryTree {
 
     private TreeNode getMin(TreeNode right) {
         if (right == null) return null;
-        return getMin(right.left);
+        return getMin(right.getLeft());
     }
 
     private TreeNode getMax(TreeNode left) {
         if (left == null) return null;
-        return getMin(left.right);
+        return getMin(left.getRight());
     }
 
-    static class TreeNode {
-        private int value;
-        private TreeNode left;
-        private TreeNode right;
+    public TreeNode bstFromArr(int[] arr) {
+        if (arr == null) return null;
+        return dfs(0, arr.length - 1, arr);
+    }
 
-        public TreeNode(int value) {
-            this.value = value;
-        }
+    private TreeNode dfs(int l, int r, int[] arr) {
+        if (l > r) return null;
+        int mid = (l + r) / 2;
+        TreeNode node = new TreeNode(arr[mid]);
+        node.setLeft(dfs(l, mid - 1, arr));
+        node.setRight(dfs(mid + 1, r, arr));
+        return node;
     }
 }
