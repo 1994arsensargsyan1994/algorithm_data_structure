@@ -5,12 +5,12 @@ import utils.SortUtils;
 public class QuickSort {
 
     public static void main(String[] args) {
-        int[] nums = {2, 5, 8, 1, 3, 6, 9};
+        Comparable[] nums = {2, 5, 8, 1, 3, 6, 9};
         quickSort(nums, 0, nums.length - 1);
         SortUtils.println(nums, System.out::print);
     }
 
-    private static int[] quickSort(int[] nums, int l, int r) {
+    private static Comparable[] quickSort(Comparable[] nums, int l, int r) {
         if (l < r) {
             int pivot = partition(nums, l, r);
             quickSort(nums, l, pivot - 1);
@@ -19,16 +19,16 @@ public class QuickSort {
         return nums;
     }
 
-    private static int partition(int[] nums, int l, int r) {
-        int pivot = nums[r];
+    private static int partition(Comparable[] nums, int l, int r) {
+        Comparable pivot = nums[r];
         int i = l - 1;
         for (int j = l; j <= r - 1; j++) {
-            if (nums[j] < pivot) {
+            if (SortUtils.less(nums[j],pivot)) {
                 i++;
-                swap(nums, i, j);
+                SortUtils.swap(nums, i, j);
             }
         }
-        swap(nums, i + 1, r);
+        SortUtils.swap(nums, i + 1, r);
         return i + 1;
     }
 

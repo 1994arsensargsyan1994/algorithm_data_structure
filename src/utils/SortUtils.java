@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 public final class SortUtils {
 
-    public static void println(int[] arr, Consumer<Integer> consumer) {
+    public static void println(Comparable[] arr, Consumer<Comparable> consumer) {
         for (int i = 0; i < arr.length; i++) {
             consumer.accept(arr[i]);
         }
@@ -18,6 +18,17 @@ public final class SortUtils {
             }
         }
         return max == Integer.MIN_VALUE ? -1 : max;
+    }
+
+    public static boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+
+    }
+
+    public static void swap(Comparable[] a, int i, int j) {
+        Comparable swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
     }
 
     private SortUtils() {
